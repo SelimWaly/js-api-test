@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Math API</title>
+</head>
+<body>
+    <h1 style="text-align: center;">Math API</h1>
+    
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+        const urlSearchParams = new URLSearchParams(window.location.search);
+        const params = Object.fromEntries(urlSearchParams.entries());
+
+        if (params.equation) {
+            try {
+                const result = eval(params.equation);
+                document.body.textContent = `Result: ${result}`;
+            } catch (error) {
+                document.body.textContent = "Invalid equation. Please check your input.";
+            }
+        } else {
+            document.body.textContent = "No Valid Response";
+        }
+    });
+
+
+    </script>
+</body>
+</html>
