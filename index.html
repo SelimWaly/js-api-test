@@ -8,21 +8,30 @@
     
     <script>
 
-        document.addEventListener("DOMContentLoaded", function () {
-        const urlSearchParams = new URLSearchParams(window.location.search);
-        const params = Object.fromEntries(urlSearchParams.entries());
+        
+        // JavaScript code to handle equation calculation and response
+        window.onload = function () {
+            // Get the equation from the POST request
+            fetch('/api', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    // Calculate the result
+                    const equation = data.equation;
+                    const result = eval(equation);
 
-        if (params.equation) {
-            try {
-                const result = eval(params.equation);
-                document.body.textContent = `Result: ${result}`;
-            } catch (error) {
-                document.body.textContent = "Invalid equation. Please check your input.";
-            }
-        } else {
-            document.body.textContent = "No Valid Response";
-        }
-    });
+                    // Send the result as a response
+                    const response = { result };
+                    fetch('/api', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(response),
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        };
+    </script>
 
 
     </script>
